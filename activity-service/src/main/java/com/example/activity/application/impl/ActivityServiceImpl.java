@@ -2,11 +2,10 @@ package com.example.activity.application.impl;
 
 import com.example.activity.application.ActivityService;
 import com.example.activity.domain.model.Activity;
+import com.example.activity.domain.repository.ActivityRepository;
 import com.example.activity.domain.service.ActivityDomainService;
 import com.example.activity.infrastructure.client.service.user.UserServiceClient;
 import com.example.activity.infrastructure.client.thirdparty.alipay.trade.AlipayTradeServiceClient;
-import com.example.activity.infrastructure.persistence.entity.ActivityEntity;
-import com.example.activity.infrastructure.persistence.mapper.ActivityMapper;
 import com.example.activity.interfaces.web.dto.GetUserAndActivityInfoRequest;
 import com.example.activity.interfaces.web.dto.UserAndActivityInfoResponse;
 import com.example.controller.dto.GetActivityResponse;
@@ -28,7 +27,7 @@ public class ActivityServiceImpl implements ActivityService {
 
     private final AlipayTradeServiceClient alipayTradeServiceClient;
 
-    private final ActivityMapper activityMapper;
+    private final ActivityRepository activityRepository;
 
 
     @Override
@@ -54,7 +53,7 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     public GetActivityResponse getActivityById(Integer id) {
         // 简单 CRUD 操作可以直接调用 mapper
-        ActivityEntity activity = activityMapper.getActivityById(id);
+        Activity activity = activityRepository.getActivityById(id);
         GetActivityResponse response = new GetActivityResponse();
         BeanUtils.copyProperties(activity , response);
         return response;

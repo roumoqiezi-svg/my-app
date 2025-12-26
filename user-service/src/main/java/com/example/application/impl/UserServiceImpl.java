@@ -2,8 +2,8 @@ package com.example.application.impl;
 
 import com.example.application.UserService;
 import com.example.controller.dto.UserResponse;
-import com.example.infrastructure.persistence.entity.UserEntity;
-import com.example.infrastructure.persistence.mapper.UserMapper;
+import com.example.domain.model.User;
+import com.example.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -16,14 +16,14 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
 
-    private final UserMapper userMapper;
+    private final UserRepository userRepository;
 
     @Override
     public UserResponse getUserById(Integer id) {
         // 简单 CRUD 操作可以直接调用 mapper
-        UserEntity entity = userMapper.getUserById(id);
+        User user = userRepository.getUserById(id);
         UserResponse response = new UserResponse();
-        BeanUtils.copyProperties(entity, response);
+        BeanUtils.copyProperties(user, response);
         return response;
     }
 }
